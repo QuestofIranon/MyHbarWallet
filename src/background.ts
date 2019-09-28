@@ -5,6 +5,12 @@ import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import path from 'path'
+
+// hack to get __static working
+// see: https://github.com/electron-userland/electron-webpack/issues/172
+declare const __static: string;
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -16,7 +22,7 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
+  win = new BrowserWindow({ width: 800, height: 600, icon: path.join(__static, 'icon.png'), webPreferences: {
     nodeIntegration: true
   } })
 
